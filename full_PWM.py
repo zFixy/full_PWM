@@ -25,6 +25,14 @@ def vypni(led):
 def zhasni_vse():
     for led in leds:
         vypni(led)
+
+def led_pozvolna():
+    for led in leds:
+        for duty in range(MIN_JAS, MAX_JAS, 1500):
+            for led in leds:
+                p.duty_u16(duty)
+            sleep_ms(20)   
+
 #----Animace----
 def hadR():
     zhasni_vse()
@@ -72,7 +80,8 @@ def blikOb():
 #---MAIN část----
 while True:
     try:
-        blikOb()
+        led_pozvolna()
+        #blikOb()
         #blik()
         #leftRight()
         #hadL()
