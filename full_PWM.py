@@ -19,9 +19,66 @@ for i in range(4):
 def zapni(led):
     led.duty_u16(MAX_JAS)
 
+def vypni(led):
+    led.duty_u16(MIN_JAS)
+
+def zhasni_vse():
+    for led in leds:
+        vypni(led)
+#----Animace----
+def hadR():
+    zhasni_vse()
+    for led in leds:
+        zapni(led)
+        sleep_ms(200)
+        vypni(led)
+
+def hadL():
+    zhasni_vse()
+    for led in reversed(leds):
+        zapni(led)
+        sleep_ms(200)
+        vypni(led)
+
+def leftRight():
+    hadR()
+    hadL()
+
+def blik():
+    zhasni_vse()
+    sleep_ms(50)
+    for led in leds:
+        zapni(led)
+    sleep_ms(50)
+
+def blikOb():
+    zhasni_vse()
+    for j in range(2):
+        for i, led in enumerate(leds):
+            if i % 2 == 0:
+                zapni(led)
+        sleep_ms(100)
+        zhasni_vse()
+        sleep_ms(100)
+
+    for j in range(2):
+        for i, led in enumerate(leds):
+            if i % 2 != 0:
+                zapni(led)
+        sleep_ms(100)
+        zhasni_vse()
+        sleep_ms(100)
+
 #---MAIN část----
 while True:
     try:
-        zapni(leds[0])
+        blikOb()
+        #blik()
+        #leftRight()
+        #hadL()
+        #hadR()
+        #vypni(leds[0])
+        #zapni(leds[0])
     except KeyboardInterrupt:
+        zhasni_vse()
         break
