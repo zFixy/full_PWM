@@ -34,8 +34,43 @@ def zapni_pozvolna(led):
 def vypni_pozvolna(led):
         for duty in range(MAX_JAS, MIN_JAS, -1500):
             led.duty_u16(duty)
-            sleep_ms(20)   
+            sleep_ms(20)
+        led.duty_u16(0)
 
+
+#----PWM Animace----
+def PWM_RIGHT_ON():
+    zhasni_vse()
+    for led in leds:
+        zapni_pozvolna(led)
+
+def PWM_RIGHT_OFF():
+    for led in leds:
+        vypni_pozvolna(led)
+
+def PWM_LEFT_ON():
+    zhasni_vse()
+    for led in reversed(leds):
+        zapni_pozvolna(led)
+
+def PWM_LEFT_OFF():
+    for led in reversed(leds):
+        vypni_pozvolna(led)
+
+def BREATH_ON():
+    zhasni_vse()
+    for duty in range(MIN_JAS, MAX_JAS, 1500):
+        for led in leds:
+            led.duty_u16(duty)
+        sleep_ms(20)
+
+def BREATH_OFF():
+    zhasni_vse()
+    for duty in range(MAX_JAS, MIN_JAS, -1500):
+        for led in leds:
+            led.duty_u16(duty)
+        sleep_ms(20)
+        led.duty_u16(0)
 #----Animace----
 def hadR():
     zhasni_vse()
@@ -83,7 +118,14 @@ def blikOb():
 #---MAIN část----
 while True:
     try:
-        zapni_pozvolna(leds[0])
+        BREATH_ON()
+        BREATH_OFF()
+        #PWM_LEFT_ON()
+        #PWM_LEFT_OFF()
+        #PWM_RIGHT_ON()
+        #PWM_RIGHT_OFF()
+        #zapni_pozvolna(leds[0])
+        #vypni_pozvolna(leds[0])
         #blikOb()
         #blik()
         #leftRight()
